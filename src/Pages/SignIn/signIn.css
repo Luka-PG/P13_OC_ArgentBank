@@ -1,0 +1,57 @@
+.sign-in-button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+    border : none ;
+    background-color: #6458f5;
+    color: #fff;
+    transition: 0.2s;
+    border-radius: 5px;
+}
+
+.sign-in-button:hover {
+  font-size: 25px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.sign-in-content {
+  box-sizing: border-box;
+  background-color: white;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 70px;
+  padding: 30px;
+  border-radius: 7px;
+}
+
+.sign-in-icon {
+  font-size: 90px;
+}
+
+.input-remember {
+  display: flex;
+}
+
+.input-remember label {
+  margin-left:5px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 15px 0 15px 0;
+}
+
+.input-wrapper label {
+  font-weight: bold;
+}
+
+.input-wrapper input {
+  padding: 5px;
+  font-size: 15px;
+}
