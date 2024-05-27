@@ -16,6 +16,7 @@ const store = useStore();
 
 const user = useSelector(selectUser);
 
+//vérification de la possession d'un token par l'utilisateur
 useEffect(() => {
   checkStorageToken(store);
 }, [store]);

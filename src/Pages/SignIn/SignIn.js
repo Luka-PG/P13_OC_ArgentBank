@@ -20,15 +20,18 @@ export default function SignIn () {
   const navigate = useNavigate();
 
   useEffect(() => {
+    //si l'utilisateur possède déja un token associé alors navigation vers sa page profil
     if (user.token) {
       navigate("/Profil");
     }
   }, [navigate, user.token]);
 
+  //gestion de la checkbox pour se souvenir de l'utilisateur
   const handleCheckbox = () => {
     rememberMe(store);
   };
 
+  //fonction d'envoi des informations lors de la requête de connexion
   async function loginSubmit(e) {
     e.preventDefault();
     const token = await fetchUpdateToken(store, email, password);
