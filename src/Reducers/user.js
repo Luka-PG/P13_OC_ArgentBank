@@ -11,13 +11,16 @@ const initialState = {
   rememberMe: false,
 };
 
-//établissement des reducers utilisés dans le projet
+// on crée une slice ou on va établir les actions avec les reducers qui vont avec
 export const {actions, reducer} = createSlice({
   name: "user",
   initialState,
+//mise en place des actions avec leurs reducers respectifs utilisés dans le projet
   reducers: {
     
-    //gestion du token lors du fetch
+   //gestion du token
+
+    //gestion du token lors du fetch en fonction de l'état utilisateur
     tokenFetching: (state) => { 
       if (state.tokenStatus === "void") {
         state.tokenStatus = "pending";
@@ -35,7 +38,9 @@ export const {actions, reducer} = createSlice({
       return;
     },
 
-    // gestion de l'état du token à la fin de la reqûete
+  // gestion de l'état du token à la fin de la reqûete
+
+    //résolution du token utilisateur si les informations utilisateur sont correctes
     tokenResolved: (state, action) => {
         if (state.tokenStatus === "pending" || state.tokenStatus === "updating") {
           state.tokenStatus = "resolved";
@@ -44,7 +49,7 @@ export const {actions, reducer} = createSlice({
         }
     },
 
-    //gestion du token et des données utilisateur si token refusé
+    //gestion du token utilisateur si les informations utilisateur sont refusées
     tokenRejected: {
       prepare: (tokenError) => ({
         payload: {tokenError},
@@ -59,7 +64,9 @@ export const {actions, reducer} = createSlice({
       }
     },
 
-    //gestion du fetch des données utilisateur
+  //gestion des données utilisateur
+
+    //fetch des données utilisateur en fonction de l'état utilisateur
     dataFetching: (state) => {
       if (state.dataStatus === "void") {
         state.dataStatus = "pending";
@@ -76,6 +83,8 @@ export const {actions, reducer} = createSlice({
       }
       return;
     },
+
+  //état des données utilisateur à la fin de la requête 
 
     //lorsque la requête est complétée les données sont envoyées
     dataResolved: (state, action) => {
@@ -101,7 +110,8 @@ export const {actions, reducer} = createSlice({
       }
     },
 
-    //gestion de l'état utilisateur lors de la déconnexion
+
+  //mise-à-jour de l'état utilisateur lors de la déconnexion
     logout: (state) => {
       state.tokenStatus = "void";
         state.dataStatus = "void";
@@ -113,7 +123,8 @@ export const {actions, reducer} = createSlice({
         return;
     },
 
-    //vérification du token utilisateur
+  //gestion de la session utilisateur lors de la fermeture de la page : 
+    //si la case "se souvenir de moi" est cochée alors on se souvient de l'utilisateur, si il possède un token
     remember: (state) => {
       if (state.token) {
         state.rememberMe = true;
@@ -123,7 +134,7 @@ export const {actions, reducer} = createSlice({
       return;
     },
 
-    //gestion de la mis-à-jour des données utilisateur
+  //gestion de la mis-à-jour des données utilisateur lors de l'édition des informations
     editProfil: {
       prepare: (firstName, lastName) => ({
         payload: {firstName, lastName},

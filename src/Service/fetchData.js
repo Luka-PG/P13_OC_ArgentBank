@@ -1,7 +1,7 @@
 import { actions } from "../Reducers/user";
 import { selectUser } from "../Utils/selectors";
 
-//fonction pour venir fetch ou mettre à jour le token 
+//fonction pour venir fetch / mettre à jour le token 
 export async function fetchUpdateToken(store, email, password) {
   
   //on vient prendre le status du token et de l'utilisateur
@@ -14,6 +14,7 @@ export async function fetchUpdateToken(store, email, password) {
 
   //on prèpare le fetch du token en indiquant les informations nécessaire dans le header de la requête
   store.dispatch(actions.tokenFetching());
+  //header de la requête de fetch
   const optionsToken = {
     method: "POST",
     headers: {
@@ -27,10 +28,11 @@ export async function fetchUpdateToken(store, email, password) {
     //fetch du token avec info header
     const response = await fetch("http://localhost:3001/api/v1/user/login",optionsToken);
     const res = await response.json();
+    //on dispatch l'action de résolution du token pour finir le fetch
     store.dispatch(actions.tokenResolved(res.body.token));
-
+  //si la case "se souvenir de moi" à été cochée :
     if (rememberMeValue) {
-      //on set le token dans le local storage
+      //on set le token dans le local storage et le session storage pour que, si l'utilisateur re-ouvre la page, sa session est toujours ouverte
       localStorage.setItem("token", res.body.token);
       sessionStorage.setItem("token", res.body.token);
     }
@@ -78,7 +80,6 @@ export async function fetchUpdateData(store, token) {
 
 //fonction d'édition du profil
 export async function editProfil(store, firstName, lastName, token) {
-  //on prépare le header de la requête
   const optionsEditProfil = {
     method: "PUT",
     headers: {
@@ -88,7 +89,7 @@ export async function editProfil(store, firstName, lastName, token) {
     body: JSON.stringify({ firstName, lastName }),
   };
   try {
-    //action d'edit de profil
+    //requête de mise-à-jour de profil
     await fetch("http://localhost:3001/api/v1/user/profile",optionsEditProfil);
     store.dispatch(actions.editProfil(firstName, lastName));
   } catch (error) {
@@ -105,7 +106,7 @@ export function checkStorageToken(store) {
   }
 }
 
-//fonction pour garder l'utilisateur en mémoire  
+//fonction pour garder l'utilisateur en mémoire si la case "se souvenir de moi" est cochée  
 export function rememberMe(store) {
   store.dispatch(actions.remember());
 }
