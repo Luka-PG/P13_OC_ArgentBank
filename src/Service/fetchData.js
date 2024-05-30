@@ -45,7 +45,7 @@ export async function fetchUpdateToken(store, email, password) {
   }
 }
   
-//fontcion pour fetch les data au token correspondant
+//fonction pour fetch les data au token correspondant
 export async function fetchUpdateData(store, token) {
   if (token === null) {
     return;
@@ -64,7 +64,7 @@ export async function fetchUpdateData(store, token) {
     },
   };
   try {
-    //requête pour avoir les données correspondant au token
+    //requête pour avoir les données correspondant et le token d'autorisation
     const response = await fetch("http://localhost:3001/api/v1/user/profile",requestForProfilHeaders);
     const res = await response.json();
     //si requête non autorisée alors on déconnecte l'utilisateur
@@ -97,7 +97,7 @@ export async function editProfil(store, firstName, lastName, token) {
   }
 }
 
-//fonction pour vérifier la présence d'un token utilisateur
+//fonction pour vérifier la présence d'un token utilisateur et se rappeler de l'utilisateur
 export function checkStorageToken(store) {
   const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   if (token) {
